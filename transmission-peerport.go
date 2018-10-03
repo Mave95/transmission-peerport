@@ -26,7 +26,8 @@ func main() {
                         ipv4Addr, _, err := net.ParseCIDR(addr.String())
                         checkErr(err)
                         port := 30000 + int64(binary.BigEndian.Uint64(ipv4Addr[8:]) & 0xFFF)
-                        transmission := transmissionrpc.New("127.0.0.1", "transmission", "transmission", nil)
+                        transmission, err := transmissionrpc.New("127.0.0.1", "transmission", "transmission", nil)
+                        checkErr(err)
                         sessionArgs, err := transmission.SessionArgumentsGet()
                         checkErr(err)
                         if *sessionArgs.PeerPort != port {
